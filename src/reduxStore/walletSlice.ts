@@ -1,6 +1,6 @@
+import {Transaction} from './../interfaces/transaction';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import type {RootState} from '../store';
-import {Transaction} from '../interfaces/transaction';
 
 // Define a type for the slice state
 interface walletState {
@@ -17,8 +17,17 @@ interface walletState {
 const initialState: walletState = {
   value: 0,
   transactions: [],
+  creditsTotal: 0,
+  debitsTotal: 0,
 };
-
+function getValues(trans: Transaction[]) {
+  let transactions = trans;
+  let credits = transactions.filter(trans => trans.type === 'credit');
+  let debits = transactions.filter(trans => trans.type === 'debit');
+  let creditsTotal = credits.reduce((a, b) => a + b.itemAmount, 0);
+  let debitsTotal = debits.reduce((a, b) => a + b.itemAmount, 0);
+  return {transactions, credits, debits, creditsTotal, debitsTotal};
+}
 export const walletSlice = createSlice({
   name: 'wallet',
   // `createSlice` will infer the state type from the `initialState` argument
@@ -26,13 +35,8 @@ export const walletSlice = createSlice({
   reducers: {
     getTranscations() {},
     setTranscations(state, action) {
-      state.transactions = action.payload;
-      state.credits = state.transactions.filter(
-        trans => trans.type === 'credit',
-      );
-      state.debits = state.transactions.filter(trans => trans.type === 'debit');
-      state.creditsTotal = state.credits.reduce((a, b) => a + b.itemAmount, 0);
-      state.debitsTotal = state.debits.reduce((a, b) => a + b.itemAmount, 0);
+      let _walletState = getValues(action.payload);
+      Object.assign(state, _walletState);
     },
     addTransaction: () => {},
 
