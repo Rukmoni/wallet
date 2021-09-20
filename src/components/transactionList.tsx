@@ -1,13 +1,36 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {useAppSelector} from '../reduxStore/reduxHooks';
-import {currencyFormatter} from '../utils/helpers'
+import { Transaction } from '../interfaces/transaction';
+
+type Iprops={
+  trans:Transaction;
+
+}
+
+const Item = ({ trans }:Iprops) => {
+ // console.log(trans)
+  return(
+  <View style={styles.item}>
+    <Text style={styles.title}>{trans.itemName}</Text>
+    <Text style={styles.cost}>{trans.itemAmount}</Text>
+  </View>
+);
+  }
 
 const TransactionsList = () => {
   const walletState = useAppSelector(state => state.wallet);
+  const renderItem = (item) => <Item trans={item.item} />;
   return (
     <View style={styles.container}>
-     <Text>TransactionsList</Text>
+      <View style={styles.titleBox}>
+      <Text style={styles.titleTxt}>TransactionsList</Text>
+      </View>
+      <FlatList
+        data={walletState.transactions}
+        renderItem={renderItem}
+        keyExtractor={item => item._id}
+      />
     </View>
   );
 };
@@ -15,25 +38,41 @@ const TransactionsList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
-    alignItems: 'center',
+    backgroundColor:'#EFEFEF'
+ 
+   
   },
-  card: {
-    width: '90%',
-    height: 200,
-    backgroundColor: 'white',
-    borderRadius: 8,
+ titleBox:{
+   flexDirection:'row',
+   height:50,
+   justifyContent:'center',
+   alignItems:'center'
 
-    shadowColor: '#00000021',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    elevation: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+ },
+ titleTxt:{
+   fontSize:18,
+   fontWeight:'bold'
+
+ },
+  item: {
+    backgroundColor: '#FFF',
+    padding: 20,
+    marginVertical: 2,
+    marginHorizontal: 12,
+    flexDirection:'row',
+    justifyContent:'space-between',
+    borderLeftWidth:5,
+    borderLeftColor:'green'
+
+  },
+  title: {
+    fontSize: 14,
+    color:'#000',
+    fontWeight:'bold'
+  },
+  cost: {
+    fontSize: 14,
+    fontWeight:'bold'
   },
 });
 export default TransactionsList;

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet,Modal} from 'react-native';
+import {View, Text, StyleSheet, Modal} from 'react-native';
 import {useAppDispatch} from '../reduxStore/reduxHooks';
 import {getTranscations} from '../reduxStore/walletSlice';
 import {WalletCard, TransactionList} from '../components';
@@ -12,10 +12,13 @@ const DashBoard = () => {
     dispatch(getTranscations());
   }, [dispatch]);
 
+  const handleModalClose = () => {
+    setShowForm(false);
+  };
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={showForm}>
-        <AddTransaction />
+        <AddTransaction onClose={handleModalClose} />
       </Modal>
       <Text>DashBoard</Text>
       <WalletCard />
@@ -25,7 +28,7 @@ const DashBoard = () => {
         iconTextColor="#FFFFFF"
         onClickAction={() => {
           console.log('FAB pressed');
-          setShowForm(true)
+          setShowForm(true);
         }}
         visible={true}
       />
@@ -35,7 +38,7 @@ const DashBoard = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'yellow',
+    
   },
 });
 export default DashBoard;

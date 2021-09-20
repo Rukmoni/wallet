@@ -16,9 +16,11 @@ const WalletCard = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+  
     marginTop: 40,
     alignItems: 'center',
+    backgroundColor:'green',
+    marginBottom:20,
   },
   card: {
     width: '90%',
