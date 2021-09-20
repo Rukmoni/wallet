@@ -5,15 +5,20 @@ import {
 } from '@reduxjs/toolkit';
 
 import createSagaMiddleware from 'redux-saga';
+import logger from 'redux-logger';
 import walletSlice from './walletSlice';
 import {watcherSaga} from './sagas/walletWatcherSaga';
+
+
+//const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const sagaMiddleware = createSagaMiddleware();
 const reducer = combineReducers({
   wallet: walletSlice,
 });
 const store = configureStore({
   reducer,
-  middleware: [...getDefaultMiddleware({thunk: false}), sagaMiddleware],
+
+  middleware: [...getDefaultMiddleware({thunk: false}), sagaMiddleware, logger],
 });
 sagaMiddleware.run(watcherSaga);
 export default store;

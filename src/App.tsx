@@ -1,24 +1,15 @@
-
-
 import React from 'react';
-import {
-    SafeAreaView,
+import {Provider} from 'react-redux';
 
-    StyleSheet,
-    Text,
-
-} from 'react-native';
+import store from './reduxStore/store';
+import DashBoard from './screens/dashBoard';
 
 const App = () => {
-    return (
-        <SafeAreaView>
-            <Text> APP</Text>
-        </SafeAreaView>
-    );
+  return (
+    <Provider store={store}>
+      <DashBoard />
+    </Provider>
+  );
 };
-
-const styles = StyleSheet.create({
-
-});
 
 export default App;
