@@ -17,8 +17,11 @@ interface walletState {
 const initialState: walletState = {
   value: 0,
   transactions: [],
+  walletTotal: 0,
   creditsTotal: 0,
   debitsTotal: 0,
+  credits: [],
+  debits: [],
 };
 function getValues(trans: Transaction[]) {
   let transactions = trans;
@@ -26,7 +29,15 @@ function getValues(trans: Transaction[]) {
   let debits = transactions.filter(trans => trans.type === 'debit');
   let creditsTotal = credits.reduce((a, b) => a + b.itemAmount, 0);
   let debitsTotal = debits.reduce((a, b) => a + b.itemAmount, 0);
-  return {transactions, credits, debits, creditsTotal, debitsTotal};
+  let walletTotal = transactions.reduce((a, b) => a + b.itemAmount, 0);
+  return {
+    transactions,
+    credits,
+    debits,
+    creditsTotal,
+    debitsTotal,
+    walletTotal,
+  };
 }
 export const walletSlice = createSlice({
   name: 'wallet',
