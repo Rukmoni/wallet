@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {useAppSelector} from '../reduxStore/reduxHooks';
-
-import {CustomInput, TransOptions} from '../components';
-import {Transaction} from '../interfaces/transaction';
 import {Formik} from 'formik';
 import * as yup from 'yup';
+
+import {useAppDispatch} from '../reduxStore/reduxHooks';
+import {CustomInput, TransOptions} from '../components';
+import {Transaction} from '../interfaces/transaction';
+import {addTransaction} from '../reduxStore/walletSlice';
+
 /**
  * interface
  */
@@ -28,7 +30,7 @@ type IaddTransaction = {
  * Form
  */
 const AddTransaction = ({onClose}: IaddTransaction) => {
-
+  const dispatch=useAppDispatch();
 
   let initValues: Transaction = {
     itemAmount: 0,
@@ -36,6 +38,10 @@ const AddTransaction = ({onClose}: IaddTransaction) => {
     itemName: '',
     type: 'debit',
   };
+  const parseAndHandleChange = (value, setFieldValue, id) => {
+    const parsed = parseInt(value, 10)
+    setFieldValue(id, parsed)
+  }
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -47,9 +53,10 @@ const AddTransaction = ({onClose}: IaddTransaction) => {
         </View>
         <Formik
           initialValues={initValues}
-          onSubmit={values => console.log(values)}
+          onSubmit={values => dispatch(addTransaction(values))}
+          
           validationSchema={validationSchema}>
-          {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+          {({handleChange, handleBlur, handleSubmit, values, errors,setFieldValue}) => (
             <View style={styles.formContainer}>
               <CustomInput
                 onChangeText={handleChange('itemName')}
@@ -58,10 +65,11 @@ const AddTransaction = ({onClose}: IaddTransaction) => {
                 errors={errors.itemName}
               />
               <CustomInput
-                onChangeText={handleChange('itemAmount')}
-                value={values.itemAmount.toString()}
+                onChangeText={value => parseAndHandleChange(value, setFieldValue, 'itemAmount')}
+                value={values.itemAmount}
                 placeholder="Amount"
                 errors={errors.itemAmount}
+                keyboardType="numeric"
               />
               <TransOptions
                 options={options}

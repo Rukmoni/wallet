@@ -23,7 +23,8 @@ export function* handleGetTransactions() {
 /**
  * Handle Add Transcation
  */
-export function* handleAddTransaction() {
+export function* handleAddTransaction({payload}) {
+    console.log("handleAddTransaction",payload)
   let newTranscation: Transaction = {
     itemAmount: 10000,
     itemName: 'salary',
@@ -32,7 +33,7 @@ export function* handleAddTransaction() {
     _id: '',
     category: '',
   };
-  let transactions = yield call(addTransactionAPI, newTranscation);
+  let transactions = yield call(addTransactionAPI, payload);
   console.log(transactions.length);
   yield put(setTranscations(transactions));
 }
