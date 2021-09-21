@@ -8,13 +8,19 @@ import FAB from 'react-native-fab';
 const DashBoard = () => {
   const dispatch = useAppDispatch();
   const [showForm, setShowForm] = useState(false);
+
+  /**
+   * Fetching Datas , can add Loading logics here to Finetune AppLoading
+   */
   useEffect(() => {
     dispatch(getTranscations());
   }, [dispatch]);
 
-  const handleModalClose = () => {
+/**/
+const handleModalClose = () => {
     setShowForm(false);
   };
+
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={showForm}>
@@ -38,7 +44,7 @@ const DashBoard = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+    backgroundColor: '#EFEFEF',
   },
 });
 export default DashBoard;

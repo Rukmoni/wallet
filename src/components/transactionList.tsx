@@ -7,28 +7,31 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {useAppSelector, useAppDispatch} from '../reduxStore/reduxHooks';
-import {Transaction} from '../interfaces/transaction';
-import {icons} from '../assets/images';
-import {deleteTransaction} from '../reduxStore/walletSlice';
+import { useAppSelector, useAppDispatch } from '../reduxStore/reduxHooks';
+import { Transaction } from '../interfaces/transaction';
+import { icons } from '../assets/images';
+import { deleteTransaction } from '../reduxStore/walletSlice';
+import { currencyFormatter } from '../utils/helpers';
 
 type Iprops = {
   trans: Transaction;
 };
 
-const Item = ({trans}: Iprops) => {
+const Item = ({ trans }: Iprops) => {
   const dispatch = useAppDispatch();
   // console.log(trans)
   return (
     <View style={trans.type === 'debit' ? styles.itemDebit : styles.itemCredit}>
       <Text style={styles.title}>{trans.itemName}</Text>
-      <Text
-        style={trans.type === 'debit' ? styles.costDebit : styles.costCredit}>
-        {trans.itemAmount}
-      </Text>
-      <TouchableOpacity onPress={() => dispatch(deleteTransaction(trans._id))}>
-        <Image style={styles.icon} source={icons.delete} />
-      </TouchableOpacity>
+      <View style={{ flexDirection: 'row' }}>
+        <Text
+          style={trans.type === 'debit' ? styles.costDebit : styles.costCredit}>
+          {currencyFormatter(trans.itemAmount)}
+        </Text>
+        <TouchableOpacity onPress={() => dispatch(deleteTransaction(trans._id))}>
+          <Image style={styles.icon} source={icons.delete} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 16,
     height: 16,
+    marginLeft:10,
   },
 });
 export default TransactionsList;

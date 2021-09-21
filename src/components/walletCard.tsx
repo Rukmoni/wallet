@@ -1,14 +1,27 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {useAppSelector} from '../reduxStore/reduxHooks';
-import {currencyFormatter} from '../utils/helpers'
+import { View, Text, StyleSheet } from 'react-native';
+import { useAppSelector } from '../reduxStore/reduxHooks';
+import { currencyFormatter } from '../utils/helpers'
 
 const WalletCard = () => {
   const walletState = useAppSelector(state => state.wallet);
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text>{currencyFormatter(walletState.walletTotal)}</Text>
+        <View style={styles.balanceBlock}>
+          <Text>Balance</Text>
+          <Text style={styles.balanceTxt}>{currencyFormatter(walletState.walletTotal)}</Text>
+        </View>
+        <View style={styles.bottomRow}>
+          <View style={styles.balanceSubBlock}>
+            <Text>Debits</Text>
+            <Text style={styles.debitsTxt}>{currencyFormatter(walletState.walletTotal)}</Text>
+          </View>
+          <View style={styles.balanceSubBlock}>
+            <Text>Credits</Text>
+            <Text style={styles.creditsTxt}>{currencyFormatter(walletState.walletTotal)}</Text>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -16,16 +29,14 @@ const WalletCard = () => {
 
 const styles = StyleSheet.create({
   container: {
-  
     marginTop: 40,
     alignItems: 'center',
-    backgroundColor:'green',
-    marginBottom:20,
+    marginBottom: 20,
   },
   card: {
     width: '90%',
     height: 200,
-    backgroundColor: 'white',
+    backgroundColor: '#7AD7F0',
     borderRadius: 8,
 
     shadowColor: '#00000021',
@@ -36,8 +47,37 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
     elevation: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+
   },
+  balanceBlock: {
+    alignItems: 'center',
+    marginTop: 50
+  },
+  balanceTxt: {
+    fontSize: 32,
+    color: 'green',
+    fontWeight: 'bold'
+  },
+  bottomRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal:10
+
+  },
+  balanceSubBlock: {
+    marginTop: 40,
+
+  },
+  creditsTxt: {
+    fontSize: 22,
+    color: 'red',
+    fontWeight: 'bold'
+  },
+  debitsTxt: {
+    fontSize: 22,
+    color: 'green',
+    fontWeight: 'bold'
+
+  }
 });
 export default WalletCard;
