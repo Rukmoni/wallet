@@ -67,6 +67,10 @@ export function _addTranscation(transcation: Transaction) {
 }
 
 export function _deleteTranscation(_id: string) {
-  transcations.find(trans => trans._id === _id).isDeleted = true;
+  
+  let newtransactions = transcations.map(trans =>
+    trans._id === _id ? {...trans, isDeleted: true} : trans,
+  );
+  transcations = [...newtransactions];
   return transcations.filter(trans => !trans.isDeleted);
 }

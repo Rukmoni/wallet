@@ -1,17 +1,17 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput} from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 
 type IcustomInput = {
-  handleChange: Function;
+  onChangeText: () => any;
   placeholder: string;
-  value: string;
-  errors: string;
+  value: any;
+  errors?: string;
 };
 const CustomInput = (props: IcustomInput) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} {...props} />
+        <TextInput style={styles.input} {...props} onChange={props.onChangeText} />
       </View>
       {props.errors && <Text style={styles.errorTxt}>{props.errors}</Text>}
     </View>

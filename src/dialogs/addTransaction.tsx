@@ -3,22 +3,19 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useAppSelector} from '../reduxStore/reduxHooks';
 
 import {CustomInput, TransOptions} from '../components';
+import {Transaction} from '../interfaces/transaction';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 /**
  * interface
  */
-interface MyFormValues {
-  name: string;
-  amount: number;
-  type: string;
-}
+
 /**
  * Form Contstants declarations
  */
 const validationSchema = yup.object().shape({
-  name: yup.string().required(),
-  amount: yup.number().required(),
+  itemName: yup.string().required(),
+  itemAmount: yup.number().required(),
 });
 const options = ['debit', 'credit'];
 /**
@@ -31,15 +28,13 @@ type IaddTransaction = {
  * Form
  */
 const AddTransaction = ({onClose}: IaddTransaction) => {
-  const walletState = useAppSelector(state => state.wallet);
-  const [value, setValue] = useState(0);
-  const [transOpt, setTransOpt] = useState(options[0]);
 
-  let initValues: MyFormValues = {
-    amount: 0,
-    name: '',
-    category: '',
-    type: transOpt,
+
+  let initValues: Transaction = {
+    itemAmount: 0,
+    isDeleted: false,
+    itemName: '',
+    type: 'debit',
   };
   return (
     <View style={styles.container}>
@@ -57,16 +52,16 @@ const AddTransaction = ({onClose}: IaddTransaction) => {
           {({handleChange, handleBlur, handleSubmit, values, errors}) => (
             <View style={styles.formContainer}>
               <CustomInput
-                onChangeText={handleChange('name')}
-                value={values.name}
+                onChangeText={handleChange('itemName')}
+                value={values.itemName}
                 placeholder="name"
-                errors={errors.name}
+                errors={errors.itemName}
               />
               <CustomInput
-                onChangeText={handleChange('amount')}
-                value={values.amount}
-                placeholder="Amount11"
-                errors={errors.amount}
+                onChangeText={handleChange('itemAmount')}
+                value={values.itemAmount.toString()}
+                placeholder="Amount"
+                errors={errors.itemAmount}
               />
               <TransOptions
                 options={options}
@@ -91,6 +86,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#ccc',
   },
   card: {
     width: '90%',

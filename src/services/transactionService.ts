@@ -13,6 +13,6 @@ export function addTransactionAPI(transcation: Transaction) {
   return _addTranscation(transcation) as Transaction[];
 }
 
-export function deleteTransaction(_id: string) {
+export function delteTransactionAPI(_id: string) {
   return _deleteTranscation(_id) as Transaction[];
 }

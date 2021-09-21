@@ -2,7 +2,7 @@ export interface Transaction {
   itemAmount: number;
   itemName: string;
   isDeleted: false;
-  category: string;
+  category?: string;
   type: string;
-  _id: string;
+  _id?: string;
 }
