@@ -26,7 +26,7 @@ const handleModalClose = () => {
       <Modal animationType="slide" transparent={true} visible={showForm}>
         <AddTransaction onClose={handleModalClose} />
       </Modal>
-      <Text>DashBoard</Text>
+    
       <WalletCard />
       <TransactionList />
       <FAB

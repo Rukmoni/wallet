@@ -29,7 +29,7 @@ function getValues(trans: Transaction[]) {
   let debits = transactions.filter(trans => trans.type === 'debit');
   let creditsTotal = credits.reduce((a, b) => a + b.itemAmount, 0);
   let debitsTotal = debits.reduce((a, b) => a + b.itemAmount, 0);
-  let walletTotal = transactions.reduce((a, b) => a + b.itemAmount, 0);
+  let walletTotal = debitsTotal-creditsTotal;
   return {
     transactions,
     credits,
@@ -52,16 +52,11 @@ export const walletSlice = createSlice({
     addTransaction: (state,action) => {},
     deleteTransaction: (state,action) => {},
 
-    // Use the PayloadAction type to declare the contents of `action.payload`
-  /*   incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
-    }, */
+
   },
 });
 
 export const {
- 
-  incrementByAmount,
   getTranscations,
   setTranscations,
   addTransaction,

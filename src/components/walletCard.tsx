@@ -15,11 +15,11 @@ const WalletCard = () => {
         <View style={styles.bottomRow}>
           <View style={styles.balanceSubBlock}>
             <Text>Debits</Text>
-            <Text style={styles.debitsTxt}>{currencyFormatter(walletState.walletTotal)}</Text>
+            <Text style={styles.debitsTxt}>{currencyFormatter(walletState.debitsTotal)}</Text>
           </View>
           <View style={styles.balanceSubBlock}>
             <Text>Credits</Text>
-            <Text style={styles.creditsTxt}>{currencyFormatter(walletState.walletTotal)}</Text>
+            <Text style={styles.creditsTxt}>{currencyFormatter(walletState.creditsTotal)}</Text>
           </View>
         </View>
       </View>

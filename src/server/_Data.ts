@@ -2,15 +2,15 @@ import {Transaction} from './../interfaces/transaction';
 
 let transcations = [
   {
-    itemAmount: 800,
-    itemName: 'Harry Potter Book 1',
+    itemAmount: 8000,
+    itemName: 'Income',
     isDeleted: false,
     category: 'Education',
     type: 'debit',
     _id: '5e84bf4e31afde2abc9bde91',
   },
   {
-    itemAmount: 3000,
+    itemAmount: 300,
     itemName: 'School Fee',
     isDeleted: false,
     category: 'Bills',
@@ -18,14 +18,14 @@ let transcations = [
     _id: '5e84be5fe0fabd3ff422d1ac',
   },
   {
-    itemAmount: 800,
+    itemAmount: 100,
     itemName: 'Harry Potter Book 1',
     isDeleted: false,
     category: 'Education',
     _id: '5e84bfca6c65dc381cb2bf1b',
   },
   {
-    itemAmount: 4000,
+    itemAmount: 40,
     itemName: 'Bought Many Vegetables',
     isDeleted: false,
     category: 'Vegetables',
@@ -33,7 +33,7 @@ let transcations = [
     _id: '5e856d9609435c2e807c89f7',
   },
   {
-    itemAmount: 450,
+    itemAmount: 100,
     itemName: 'Grocery',
     isDeleted: false,
     category: 'Dairy',
