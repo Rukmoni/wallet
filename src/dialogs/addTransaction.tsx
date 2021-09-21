@@ -8,9 +8,6 @@ import {CustomInput, TransOptions} from '../components';
 import {Transaction} from '../interfaces/transaction';
 import {addTransaction} from '../reduxStore/walletSlice';
 
-/**
- * interface
- */
 
 /**
  * Form Contstants declarations
@@ -30,7 +27,7 @@ type IaddTransaction = {
  * Form
  */
 const AddTransaction = ({onClose}: IaddTransaction) => {
-  const dispatch=useAppDispatch();
+  const dispatch = useAppDispatch();
 
   let initValues: Transaction = {
     itemAmount: 0,
@@ -38,9 +35,24 @@ const AddTransaction = ({onClose}: IaddTransaction) => {
     itemName: '',
     type: 'debit',
   };
+  /**
+   * 
+   * @param value 
+   * @param setFieldValue 
+   * @param id 
+   * converting String to number
+   */
   const parseAndHandleChange = (value, setFieldValue, id) => {
-    const parsed = parseInt(value, 10)
-    setFieldValue(id, parsed)
+    const parsed = parseInt(value, 10);
+    setFieldValue(id, parsed);
+  };
+  /**
+   * Submit
+   */
+  const onSubmit=(values)=>{
+    dispatch(addTransaction(values));
+    onClose();
+
   }
   return (
     <View style={styles.container}>
@@ -53,10 +65,9 @@ const AddTransaction = ({onClose}: IaddTransaction) => {
         </View>
         <Formik
           initialValues={initValues}
-          onSubmit={values => dispatch(addTransaction(values))}
-          
+          onSubmit={values => onSubmit(values)}
           validationSchema={validationSchema}>
-          {({handleChange, handleBlur, handleSubmit, values, errors,setFieldValue}) => (
+          {({handleChange, handleSubmit, values, errors, setFieldValue}) => (
             <View style={styles.formContainer}>
               <CustomInput
                 onChangeText={handleChange('itemName')}
@@ -65,7 +76,9 @@ const AddTransaction = ({onClose}: IaddTransaction) => {
                 errors={errors.itemName}
               />
               <CustomInput
-                onChangeText={value => parseAndHandleChange(value, setFieldValue, 'itemAmount')}
+                onChangeText={value =>
+                  parseAndHandleChange(value, setFieldValue, 'itemAmount')
+                }
                 value={values.itemAmount}
                 placeholder="Amount"
                 errors={errors.itemAmount}

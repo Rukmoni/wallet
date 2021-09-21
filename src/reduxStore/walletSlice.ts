@@ -49,7 +49,7 @@ export const walletSlice = createSlice({
       let _walletState = getValues(action.payload);
       Object.assign(state, _walletState);
     },
-    addTransaction: () => {},
+    addTransaction: (state,action) => {},
     deleteTransaction: (state,action) => {},
 
     // Use the PayloadAction type to declare the contents of `action.payload`
