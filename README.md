@@ -5,7 +5,7 @@ React Native Expense Tracker app
 ## Screenshots
 <div align="center">
     <img src="/screenshots/dashboard.png" width="200px"</img> 
-     <img src="/screenshots/screenshot2.png" width="200px"</img> 
+     <img src="/screenshots/addTransaction.png" width="200px"</img> 
    
 </div>
   
